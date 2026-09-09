@@ -31,13 +31,30 @@ const trips = [
 ];
 
 
-const tickets = [{
-    id: 1,
-    passengerName: "Ahmed",
-    tripId: 3,
-    seatNumber: 1,
-    price: 90
-}];
+const tickets = [
+        {
+        id: 1,
+        passengerName: "Ahmed",
+        tripId: 3,
+        seatNumber: 1,
+        price: 90
+    },
+        {
+        id: 2,
+        passengerName: "Ahmed",
+        tripId: 3,
+        seatNumber: 1,
+        price: 90
+    },
+        {
+        id: 2,
+        passengerName: "Ahmed",
+        tripId: 3,
+        seatNumber: 1,
+        price: 90
+    },
+
+];
 
 
 
@@ -145,7 +162,7 @@ function CreateTicket(IndexTripId) {
 
         tickets.push(ticket);
         trips[IndexTripId].availableSeats -= 1;
-        
+
         console.log(`
     Ticket acheté avec succès.
     Ticket # ${ticket.id}
@@ -158,11 +175,31 @@ function CreateTicket(IndexTripId) {
 }
 
 function Acheter(IndexTripId) {
-    let index = TrajetExist(IndexTripId); 
+    let index = TrajetExist(IndexTripId);
     CreateTicket(index);
 }
 
+function AfficherTickets() {
+    if (tickets.length === 0) {
+        console.log("Ticket Aucun ticket enregistré.")
+    } else {
+        for (const ticket of tickets) {
+            console.log(`
+    Ticket acheté avec succès.
+    Ticket # ${ticket.id}
+    Passager : ${ticket.passengerName}
+    Trajet : ${trips[ticket.tripId - 1].departure} → ${trips[ticket.tripId - 1].destination}
+    Place : ${ticket.seatNumber}
+    Prix : ${ticket.price} DHs
+            `)
+        }
+    }
+}
 
+
+function Annuler(){
+    
+}
 
 
 
