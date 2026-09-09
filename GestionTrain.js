@@ -57,35 +57,36 @@ RAILWAY MANAGER
         `)
 }
 
-// while (Quit === true) {
-//     Menu();
-//     let choix = Number(prompt("Votre Choix: "));
-//     switch (choix) {
-//         case 1:
-//             AffTrajet();
-//             break;
-//         case 2:
-//             Acheter();
-//             break;
-//         case 3:
-//             AfficherTickets();
-//             break;
-//         case 4:
-//             Annuler();
-//             break;
-//         case 5:
-//             Rechercher();
-//             break;
-//         case 6:
-//             Filtret();
-//             break;
-//         case 7:
-//             Trier();
-//             break;
-//         case 0:
-//             Quitter();
-//     }
-// }
+while (Quit === true) {
+    Menu();
+    let choix = Number(prompt("Votre Choix: "));
+    switch (choix) {
+        case 1:
+            AffTrajet();
+            break;
+        case 2:
+            tripId = Number(prompt("Identifiant du trajet: "));
+            Acheter(tripId);
+            break;
+        case 3:
+            AfficherTickets();
+            break;
+        case 4:
+            Annuler();
+            break;
+        case 5:
+            Rechercher();
+            break;
+        case 6:
+            Filtret();
+            break;
+        case 7:
+            Trier();
+            break;
+        case 0:
+            Quitter();
+    }
+}
 
 function Quitter() {
     Quit = false;
@@ -104,10 +105,7 @@ Places disponibles : ${trip.availableSeats}
             `)
     }
 }
-
-passengerName = prompt("Nom du passager: ");
-tripId = Number(prompt("Identifiant du trajet: "));
-
+// 1 find index of trip
 function TrajetExist(IndexTripId) {
     for (let trip of trips) {
         if (trip.id === IndexTripId) {
@@ -120,7 +118,7 @@ function TrajetExist(IndexTripId) {
     }
     return undefined; // non non
 }
-
+// 2 verify and create ticket 
 function CreateTicket(IndexTripId) {
     if (IndexTripId === undefined) {
         console.log("Trajet introuvable.")
@@ -137,27 +135,35 @@ function CreateTicket(IndexTripId) {
             SeatNum = tickets[tickets.length - 1].seatNumber + 1;
         }
 
-        
         let ticket = {
             id: ticketId,
-            passengerName: passengerName = prompt("Nom du passager: "),
+            passengerName: prompt("Nom du passager: "),
             tripId: IndexTripId + 1,
-            seatNumber:SeatNum,
-            price: ticket.price ,
+            seatNumber: SeatNum,
+            price: tickets[IndexTripId].price,
         }
+
         tickets.push(ticket);
+        trips[IndexTripId].availableSeats -= 1;
+        
+        console.log(`
+    Ticket acheté avec succès.
+    Ticket # ${ticket.id}
+    Passager : ${ticket.passengerName}
+    Trajet : ${trips[IndexTripId].departure} → ${trips[IndexTripId].destination}
+    Place : ${ticket.seatNumber}
+    Prix : ${ticket.price} DHs
+            `)
     }
 }
 
-
-
-
-
-
-
-function Acheter() {
-
+function Acheter(IndexTripId) {
+    let index = TrajetExist(IndexTripId); 
+    CreateTicket(index);
 }
+
+
+
 
 
 
