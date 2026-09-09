@@ -37,21 +37,21 @@ const tickets = [
         passengerName: "Ahmed",
         tripId: 3,
         seatNumber: 1,
-        price: 90
+        price: 140
     },
         {
         id: 2,
         passengerName: "Ahmed",
-        tripId: 3,
+        tripId: 2,
         seatNumber: 1,
         price: 90
     },
         {
-        id: 2,
+        id: 3,
         passengerName: "Ahmed",
-        tripId: 3,
+        tripId: 1,
         seatNumber: 1,
-        price: 90
+        price: 25
     },
 
 ];
@@ -82,14 +82,15 @@ while (Quit === true) {
             AffTrajet();
             break;
         case 2:
-            tripId = Number(prompt("Identifiant du trajet: "));
+            let tripId = Number(prompt("Identifiant du trajet: "));
             Acheter(tripId);
             break;
         case 3:
             AfficherTickets();
             break;
         case 4:
-            Annuler();
+            let IdTicket=Number(prompt("Identifiant du ticket: "))
+            Annuler(IdTicket);
             break;
         case 5:
             Rechercher();
@@ -197,8 +198,27 @@ function AfficherTickets() {
 }
 
 
-function Annuler(){
-    
+
+
+function Annuler(IdTicket){
+    // rechercher et verifier l'existence d'un ticket:
+    let trouve=false;
+    let index = 0 ;
+    for (const ticket of tickets){
+        if(ticket.id === IdTicket ){
+            trips[ticket.tripId - 1].availableSeats ++;
+            tickets.splice(ticket[0], 1)
+            console.log("ticket supprimé")
+            trouve = true
+        }
+        index ++
+    }
+    if (!trouve ){
+        console.log("Ticket introuvable.")
+    }else {
+
+    }
+
 }
 
 
