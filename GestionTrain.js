@@ -7,7 +7,7 @@ const trips = [
         destination: "Youssoufia",
         departureTime: "07:30",
         arrivalTime: "08:30",
-        price: 25,
+        price: 100,   //25
         availableSeats: 50
     },
     {
@@ -16,7 +16,7 @@ const trips = [
         destination: "Marrakech",
         departureTime: "08:00",
         arrivalTime: "10:30",
-        price: 90,
+        price: 54,   //90
         availableSeats: 50
     },
     {
@@ -25,11 +25,10 @@ const trips = [
         destination: "Casablanca",
         departureTime: "09:00",
         arrivalTime: "13:00",
-        price: 140,
+        price: 20,    //140
         availableSeats: 50
     }
 ];
-
 
 const tickets = [
     {
@@ -262,8 +261,25 @@ function Filtrer(Depart) {
 }
 
 
+function Trier() {
+    let OTrip=[...trips];     
 
+    for (let i = 0; i < OTrip.length; i++) {   
+        for (let j = 0; j < OTrip.length - 1 - i; j++) {
+            if (OTrip[j].price > OTrip[j + 1].price) {
+                let a = OTrip[j];
+                OTrip[j]= OTrip[j + 1];
+                OTrip[j + 1] = a;
+            }
+        }
+    }
 
+    for (tr of OTrip){
+        console.log(`
+            ${tr.departure} → ${tr.destination} : ${tr.price} DHs
+            `)
+    }
+}
 
 
 
