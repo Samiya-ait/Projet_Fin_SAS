@@ -1,5 +1,5 @@
 const prompt = require("prompt-sync")();
-let Quit = true;
+
 const trips = [
     {
         id: 1,
@@ -32,23 +32,23 @@ const trips = [
 
 
 const tickets = [
-        {
+    {
         id: 1,
         passengerName: "Ahmed",
         tripId: 3,
         seatNumber: 1,
         price: 140
     },
-        {
+    {
         id: 2,
-        passengerName: "Ahmed",
+        passengerName: "samiya",
         tripId: 2,
         seatNumber: 1,
         price: 90
     },
-        {
+    {
         id: 3,
-        passengerName: "Ahmed",
+        passengerName: "hassan",
         tripId: 1,
         seatNumber: 1,
         price: 25
@@ -74,6 +74,7 @@ RAILWAY MANAGER
         `)
 }
 
+let Quit = true;
 while (Quit === true) {
     Menu();
     let choix = Number(prompt("Votre Choix: "));
@@ -89,14 +90,14 @@ while (Quit === true) {
             AfficherTickets();
             break;
         case 4:
-            let IdTicket=Number(prompt("Identifiant du ticket: "))
+            let IdTicket = Number(prompt("Identifiant du ticket: "))
             Annuler(IdTicket);
             break;
         case 5:
             Rechercher();
             break;
         case 6:
-            Filtret();
+            Filtrer();
             break;
         case 7:
             Trier();
@@ -123,10 +124,11 @@ Places disponibles : ${trip.availableSeats}
             `)
     }
 }
-// 1 find index of trip
-function TrajetExist(IndexTripId) {
+
+// 1 verify trajet & find index of trip
+function TrajetExist(TripId) {
     for (let trip of trips) {
-        if (trip.id === IndexTripId) {
+        if (trip.id === TripId) {
             if (trip.availableSeats > 0) {
                 return trip.id - 1
             } else {
@@ -134,9 +136,9 @@ function TrajetExist(IndexTripId) {
             }
         }
     }
-    return undefined; // non non
+    return undefined; // none
 }
-// 2 verify and create ticket 
+// 2  create ticket 
 function CreateTicket(IndexTripId) {
     if (IndexTripId === undefined) {
         console.log("Trajet introuvable.")
@@ -156,9 +158,9 @@ function CreateTicket(IndexTripId) {
         let ticket = {
             id: ticketId,
             passengerName: prompt("Nom du passager: "),
-            tripId: IndexTripId + 1,
+            tripId: IndexTripId + 1 ,
             seatNumber: SeatNum,
-            price: tickets[IndexTripId].price,
+            price: tickets[IndexTripId ].price,
         }
 
         tickets.push(ticket);
@@ -184,9 +186,9 @@ function AfficherTickets() {
     if (tickets.length === 0) {
         console.log("Ticket Aucun ticket enregistré.")
     } else {
+    console.log("=== TICKETS ===")
         for (const ticket of tickets) {
             console.log(`
-    Ticket acheté avec succès.
     Ticket # ${ticket.id}
     Passager : ${ticket.passengerName}
     Trajet : ${trips[ticket.tripId - 1].departure} → ${trips[ticket.tripId - 1].destination}
@@ -200,24 +202,39 @@ function AfficherTickets() {
 
 
 
-function Annuler(IdTicket){
-    // rechercher et verifier l'existence d'un ticket:
-    let trouve=false;
-    let index = 0 ;
-    for (const ticket of tickets){
-        if(ticket.id === IdTicket ){
-            trips[ticket.tripId - 1].availableSeats ++;
-            tickets.splice(ticket[0], 1)
-            console.log("ticket supprimé")
-            trouve = true
-        }
-        index ++
-    }
-    if (!trouve ){
-        console.log("Ticket introuvable.")
-    }else {
+// function Annuler(IdTicket) {
+//     // rechercher et verifier l'existence d'un ticket:
+//     let trouve = false;
+//     let index = 0;
+//     for (const ticket of tickets) {
+//         if (ticket.id === IdTicket) {
+//             trips[ticket.tripId - 1].availableSeats++;
+//             tickets.splice(ticket[index], 1)
+//             console.log("ticket supprimé")
+//             trouve = true;
+//             index++;
+//         }
+//     }
+//     if (!trouve) {
+//         console.log("Ticket introuvable.")
+//     } 
 
+// }
+
+function Annuler(IdTicket) {
+    // rechercher et verifier l'existence d'un ticket:
+    let trouve = false;
+    for (let i=0;i<tickets.length;i++) {
+        if (tickets[i].id === IdTicket) {
+            trips[tickets[i].tripId - 1].availableSeats++;
+            tickets.splice(i,1)
+            console.log("ticket supprimé")
+            trouve = true;
+        }
     }
+    if (!trouve) {
+        console.log("Ticket introuvable.")
+    } 
 
 }
 
