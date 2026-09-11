@@ -339,13 +339,7 @@ function Acheter(TripId) {
         seatNumber = Canceled[canceledIndex].seatNumber;
         Canceled.splice(canceledIndex, 1);
     } else {
-        let totalSeats;
-        if (currentTrip.totalSeats !== undefined) {
-            totalSeats = currentTrip.totalSeats;
-        } else {
-            totalSeats = 50;
-        }
-        seatNumber = totalSeats - currentTrip.availableSeats + 1;
+        seatNumber = 50 - currentTrip.availableSeats + 1;
     }
 
     // 6. ticket obj
